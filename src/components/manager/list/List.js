@@ -19,7 +19,8 @@ const rowSelection = {
 class List extends React.Component {
     state = {
         dataSource: [],
-        loading: false
+        loading: false,
+        actionFixed: 'false'
     }
     componentWillMount() {
         this.handleRefresh();
@@ -55,6 +56,18 @@ class List extends React.Component {
         const { showMDetails } = this.props;
         showMDetails(record.id);
     }
+    
+    handleEdit = (record) => {
+        
+    }
+
+    ToggleActionFixed = () => {
+        if(this.state.actionFixed !== 'right'){
+            this.setState({ actionFixed : 'right' })
+        }else{
+            this.setState({ actionFixed : 'false' })
+        }
+    }
 
     handleDelete = (record) => {
         const { handleRefresh } = this;
@@ -81,34 +94,48 @@ class List extends React.Component {
             title: '用户名',
             dataIndex: 'username',
             key: 'username',
+            width: '120px'
         }, {
             title: '角色',
             dataIndex: 'role',
             key: 'role',
+            width: '120px'
         },{
             title: '手机号',
             dataIndex: 'phone',
             key: 'phone',
+            width: '130px',
             render: (phone,record) => ('+'+ record.prefix + phone)
         }, {
             title: '地址',
             dataIndex: 'residence',
             key: 'residence',
+            width: '120px'
         }, {
             title: 'Action',
             key: 'action',
+            width: '200px',
+            fixed: this.state.actionFixed,
             render: (record) => (
-                <span>
-                  <Button onClick={this.handleDetail.bind(this,record)} >Detail</Button>
-                  <Button onClick={ this.handleDelete.bind(this,record) } >Delete</Button>
-                </span>
+                <section>
+                    <Button size="small" onClick={this.handleDetail.bind(this,record)} >Detail</Button>
+                    <Button size="small" onClick={this.handleEdit.bind(this,record)} >Edit</Button>
+                    <Button size="small" onClick={ this.handleDelete.bind(this,record) } >Delete</Button>
+                </section>
             )
         }];
 
         return (
             <div className="list-manager">
+                <Button onClick={this.ToggleActionFixed} >操作固定/撤销</Button>
                 <Spin spinning={this.state.loading}>
-                    <Table rowSelection={rowSelection} columns={columns} dataSource={this.state.dataSource} />
+                    <Table
+                        rowSelection={rowSelection}
+                        columns={columns}
+                        dataSource={this.state.dataSource}
+                        scroll={{ x : true }}
+                        bordered="true"
+                    />
                 </Spin>
                 <style>{`
                     .list-manager{

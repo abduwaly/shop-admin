@@ -54,6 +54,9 @@ class DetailsModal extends React.Component {
             >
                 <Spin spinning={this.state.loading}>
                     <p>{ this.state.dataSource.username }</p>
+                    <p>{ this.state.dataSource.phone }</p>
+                    <p>{ this.state.dataSource.role }</p>
+                    <p>{ this.state.dataSource.address }</p>
                 </Spin>
             </Modal>
         )
