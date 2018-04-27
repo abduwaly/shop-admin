@@ -38,3 +38,11 @@ export const showMDetails = (data) => ({
 export const hideMDetails = () => ({
     type: type.HIDE_M_DETAILS
 });
+
+export const showMEdit = (data) => ({
+    type: type.SHOW_M_EDIT,
+    data,
+});
+export const hideMEdit = () => ({
+    type: type.HIDE_M_EDIT
+});

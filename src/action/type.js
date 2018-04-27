@@ -13,3 +13,6 @@ export const UPPER_CASE = 'UPPER_CASE';
 
 export const SHOW_M_DETAILS = 'SHOW_M_DETAILS';
 export const HIDE_M_DETAILS = 'HIDE_M_DETAILS';
+
+export const SHOW_M_EDIT = 'SHOW_M_EDIT';
+export const HIDE_M_EDIT = 'HIDE_M_EDIT';

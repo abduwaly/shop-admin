@@ -21,7 +21,7 @@ class SiderCustom extends Component {
         this.setMenuOpen(this.props);
     }
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps);
+        // console.log(nextProps);
         this.onCollapse(nextProps.collapsed);
         this.setMenuOpen(nextProps)
     }
@@ -33,7 +33,7 @@ class SiderCustom extends Component {
         });
     };
     onCollapse = (collapsed) => {
-        console.log(collapsed);
+        // console.log(collapsed);
         this.setState({
             collapsed,
             firstHide: collapsed,

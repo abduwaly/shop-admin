@@ -5,6 +5,7 @@ import React from 'react';
 import BreadcrumbCustom from '../../BreadcrumbCustom';
 import List from './List';
 import DetailsModal from './DetailsModal';
+import EditModal from './EditModal';
 
 
 class Managers extends React.Component {
@@ -15,6 +16,7 @@ class Managers extends React.Component {
                 <BreadcrumbCustom first="用户管理" second="用户列表" />
                 <List />
                 <DetailsModal />
+                <EditModal />
             </div>
         )
     }

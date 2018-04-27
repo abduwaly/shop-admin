@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Spin, Table, Button, Modal } from 'antd';
-import { fetchData, receiveData, showMDetails } from '@/action';
+import { fetchData, receiveData, showMDetails, showMEdit } from '@/action';
 const confirm = Modal.confirm;
 
 
@@ -20,7 +20,8 @@ class List extends React.Component {
     state = {
         dataSource: [],
         loading: false,
-        actionFixed: 'false'
+        actionFixed: 'false',
+        tableBordered: true
     }
     componentWillMount() {
         this.handleRefresh();
@@ -34,12 +35,12 @@ class List extends React.Component {
         if(next.isFetching){
             this.setState({
                 loading: true
-            })
-        } else {
+            });
+        } else if(next.data && next.data.code === 0) {
             this.setState({
-                dataSource: next.data.data,
+                dataSource: next.data.data || {},
                 loading: false
-            })
+            });
         }
     }
 
@@ -58,7 +59,8 @@ class List extends React.Component {
     }
     
     handleEdit = (record) => {
-        
+        const { showMEdit } = this.props;
+        showMEdit(record.id);
     }
 
     ToggleActionFixed = () => {
@@ -99,7 +101,7 @@ class List extends React.Component {
             title: '角色',
             dataIndex: 'role',
             key: 'role',
-            width: '120px'
+            width: '60px'
         },{
             title: '手机号',
             dataIndex: 'phone',
@@ -118,9 +120,9 @@ class List extends React.Component {
             fixed: this.state.actionFixed,
             render: (record) => (
                 <section>
-                    <Button size="small" onClick={this.handleDetail.bind(this,record)} >Detail</Button>
-                    <Button size="small" onClick={this.handleEdit.bind(this,record)} >Edit</Button>
-                    <Button size="small" onClick={ this.handleDelete.bind(this,record) } >Delete</Button>
+                    <Button size="small" onClick={this.handleDetail.bind(this,record)} >查看</Button>
+                    <Button size="small" onClick={this.handleEdit.bind(this,record)} >编辑</Button>
+                    <Button size="small" type="danger" onClick={ this.handleDelete.bind(this,record) } >删除</Button>
                 </section>
             )
         }];
@@ -134,7 +136,7 @@ class List extends React.Component {
                         columns={columns}
                         dataSource={this.state.dataSource}
                         scroll={{ x : true }}
-                        bordered="true"
+                        bordered={ this.state.tableBordered }
                     />
                 </Spin>
                 <style>{`
@@ -154,7 +156,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     fetchData: bindActionCreators(fetchData, dispatch),
     receiveData: bindActionCreators(receiveData, dispatch),
-    showMDetails: bindActionCreators(showMDetails, dispatch)
+    showMDetails: bindActionCreators(showMDetails, dispatch),
+    showMEdit: bindActionCreators(showMEdit, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);

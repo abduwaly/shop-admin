@@ -23,24 +23,20 @@ class App extends Component {
         window.onresize = () => {
             // console.log('屏幕变化了');
             this.getClientWidth();
-            // console.log(document.body.clientWidth);
         }
     }
     componentDidMount() {
         const openNotification = () => {
             notification.open({
-              message: '博主-yezihaohao',
+              message: '首次登陆',
               description: (
                   <div>
                       <p>
-                          GitHub地址： <a href="https://github.com/yezihaohao" target="_blank" rel="noopener noreferrer">https://github.com/yezihaohao</a>
-                      </p>
-                      <p>
-                          博客地址： <a href="https://yezihaohao.github.io/" target="_blank" rel="noopener noreferrer">https://yezihaohao.github.io/</a>
+                          第一次登陆会看到这个消息。。。
                       </p>
                   </div>
               ),
-              icon: <Icon type="smile-circle" style={{ color: 'red' }} />,
+              icon: <Icon type="info-circle" style={{ color: 'green' }} />,
               duration: 0,
             });
             localStorage.setItem('isFirst', JSON.stringify(true));
@@ -51,8 +47,8 @@ class App extends Component {
     getClientWidth = () => {    // 获取当前浏览器宽度并设置responsive管理响应式
         const { receiveData } = this.props;
         const clientWidth = document.body.clientWidth;
-        // console.log(clientWidth);
         receiveData({isMobile: clientWidth <= 992}, 'responsive');
+        console.log(this.props.responsive);
     };
     toggle = () => {
         this.setState({
@@ -60,8 +56,6 @@ class App extends Component {
         });
     };
     render() {
-        // console.log(this.props.auth);
-        // console.log(this.props.responsive);
         const { auth, responsive } = this.props;
         return (
             <Layout>

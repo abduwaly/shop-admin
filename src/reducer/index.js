@@ -60,8 +60,20 @@ const detailsInfo = (state = {visible: false, detailsId: undefined}, action) => 
     }
 }
 
+const editInfo = (state = {visible: false, edit: undefined}, action) => {
+    switch (action.type) {
+        case type.SHOW_M_EDIT:
+            return { visible: true, editId: action.data }
+        case type.HIDE_M_EDIT:
+            return { visible: false, editId: undefined }
+        default:
+            return { ...state }
+    }
+}
+
 export default combineReducers({
     httpData,
     globalName,
-    detailsInfo
+    detailsInfo,
+    editInfo
 });

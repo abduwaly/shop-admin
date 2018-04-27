@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchData, receiveData, hideMDetails, showMEdit } from '@/action';
-import { Modal, Spin } from 'antd';
+import { fetchData, receiveData, hideMEdit } from '@/action';
+import { Modal, Spin, Input } from 'antd';
 
-class DetailsModal extends React.Component {
+class EditModal extends React.Component {
 
     state = {
         loading: false,
@@ -16,8 +16,8 @@ class DetailsModal extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { detailsId: nextId, visible: nextV, response: nextRes = {} } = nextProps;
-        if( nextV && nextId !== this.props.detailsId){
+        const { editId: nextId, visible: nextV, response: nextRes = {} } = nextProps;
+        if( nextV && nextId !== this.props.editId){
             const { fetchData } = this.props;
             fetchData({funcName: 'getManagerById', params: nextId, stateName: 'response'});
         }
@@ -35,31 +35,30 @@ class DetailsModal extends React.Component {
     }
 
     handleOk = (e) => {
-        this.props.hideMDetails();
+        this.props.hideMEdit();
         this.props.receiveData(null, 'response');
     }
 
     handleCancel = (e) => {
-        this.props.hideMDetails();
-        this.props.showMEdit(this.props.detailsId);
+        this.props.hideMEdit();
     }
 
     render () {
         return (
             <Modal
-                title="用户信息"
-                className="manager-details-modal"
+                title="修改用户信息"
+                className="manager-edit-modal"
                 visible={this.props.visible}
-                okText="确定"
-                cancelText="编辑"
+                okText="提交"
+                cancelText="取消编辑"
                 onOk={this.handleOk}
                 onCancel={this.handleCancel}
             >
                 <Spin spinning={this.state.loading}>
-                    <p>{ this.state.dataSource.username }</p>
-                    <p>{ this.state.dataSource.phone }</p>
-                    <p>{ this.state.dataSource.role }</p>
-                    <p>{ this.state.dataSource.residence }</p>
+                    <Input defaultValue={ this.state.dataSource.username } />
+                    <Input defaultValue={ this.state.dataSource.phone } />
+                    <Input defaultValue={ this.state.dataSource.role } />
+                    <Input defaultValue={ this.state.dataSource.residence } />
                 </Spin>
             </Modal>
         )
@@ -68,14 +67,13 @@ class DetailsModal extends React.Component {
 
 const mapStateToProps = state => {
     const { response } = state.httpData;
-    const { visible, detailsId } = state.detailsInfo;
-    return { response, visible, detailsId };
+    const { visible, editId } = state.editInfo;
+    return { response, visible, editId };
 };
 const mapDispatchToProps = dispatch => ({
     fetchData: bindActionCreators(fetchData, dispatch),
     receiveData: bindActionCreators(receiveData, dispatch),
-    hideMDetails: bindActionCreators(hideMDetails, dispatch),
-    showMEdit: bindActionCreators(showMEdit, dispatch)
+    hideMEdit: bindActionCreators(hideMEdit, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(DetailsModal);
+export default connect(mapStateToProps, mapDispatchToProps)(EditModal);
