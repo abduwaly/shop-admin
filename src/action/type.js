@@ -5,6 +5,8 @@ export const REQUEST_DATA = 'REQUEST_DATA';
 
 export const RECEIVE_DATA = 'RECEIVE_DATA';
 
+export const IS_MOBILE = 'IS_MOBILE';
+
 export const INCREMENT = 'INCREMENT';
 export const DECREMENT = 'DECREMENT';
 

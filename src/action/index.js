@@ -46,3 +46,8 @@ export const showMEdit = (data) => ({
 export const hideMEdit = () => ({
     type: type.HIDE_M_EDIT
 });
+
+export const handleResponsive = (data) => ({
+    type: type.IS_MOBILE,
+    data,
+});

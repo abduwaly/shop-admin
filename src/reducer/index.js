@@ -14,6 +14,15 @@ const handleData = (state = {isFetching: true, data: {}}, action) => {
             return {...state};
     }
 };
+const responsive = (state={ isMobile: false}, action) => {
+    switch (action.type) {
+        case type.IS_MOBILE:
+            return action.data;
+        default:
+            return {...state};
+    }
+}
+
 const httpData = (state = {}, action) => {
     switch (action.type) {
         case type.RECEIVE_DATA:
@@ -73,6 +82,7 @@ const editInfo = (state = {visible: false, edit: undefined}, action) => {
 
 export default combineReducers({
     httpData,
+    responsive,
     globalName,
     detailsInfo,
     editInfo

@@ -3,7 +3,7 @@ import { Layout, notification, Icon } from 'antd';
 import './style/index.less';
 import SiderCustom from './components/SiderCustom';
 import HeaderCustom from './components/HeaderCustom';
-import { receiveData } from './action';
+import { receiveData,handleResponsive } from './action';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Routes from './routes';
@@ -45,10 +45,9 @@ class App extends Component {
         !isFirst && openNotification();
     }
     getClientWidth = () => {    // 获取当前浏览器宽度并设置responsive管理响应式
-        const { receiveData } = this.props;
+        const { handleResponsive } = this.props;
         const clientWidth = document.body.clientWidth;
-        receiveData({isMobile: clientWidth <= 992}, 'responsive');
-        console.log(this.props.responsive);
+        handleResponsive({isMobile: clientWidth <= 992});
     };
     toggle = () => {
         this.setState({
@@ -59,7 +58,7 @@ class App extends Component {
         const { auth, responsive } = this.props;
         return (
             <Layout>
-                {!responsive.data.isMobile && <SiderCustom collapsed={this.state.collapsed} />}
+                {!responsive.isMobile && <SiderCustom collapsed={this.state.collapsed} />}
                 <Layout style={{flexDirection: 'column'}}>
                     <HeaderCustom toggle={this.toggle} collapsed={this.state.collapsed} user={auth.data || {}} />
                     <Content style={{ margin: '0 16px', overflow: 'initial' }}>
@@ -71,7 +70,7 @@ class App extends Component {
                 </Layout>
                 
                 {
-                    responsive.data.isMobile && (   // 手机端对滚动很慢的处理
+                    responsive.isMobile && (   // 手机端对滚动很慢的处理
                         <style>
                         {`
                             #root{
@@ -88,11 +87,13 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-    const { auth = {data: {}}, responsive = {data: {}} } = state.httpData;
+    const { auth = {data: {}} } = state.httpData;
+    const { responsive } = state;
     return {auth, responsive};
 };
 const mapDispatchToProps = dispatch => ({
-    receiveData: bindActionCreators(receiveData, dispatch)
+    receiveData: bindActionCreators(receiveData, dispatch),
+    handleResponsive: bindActionCreators(handleResponsive, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

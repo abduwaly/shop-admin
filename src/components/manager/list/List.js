@@ -30,8 +30,8 @@ class List extends React.Component {
 
     }
     componentWillReceiveProps(nextProps) {
-        const { resData: next = {} } = nextProps;
-        console.log(next);
+        const { resData: next = {}, responsive: nextIs = {} } = nextProps;
+        // console.log(next, nextIs);
         if(next.isFetching){
             this.setState({
                 loading: true
@@ -41,6 +41,9 @@ class List extends React.Component {
                 dataSource: next.data.data || {},
                 loading: false
             });
+        }
+        if(!nextIs.isMobile){
+            this.setState({ actionFixed: false });
         }
     }
 
@@ -129,7 +132,7 @@ class List extends React.Component {
 
         return (
             <div className="list-manager">
-                <Button onClick={this.ToggleActionFixed} >操作固定/撤销</Button>
+                {this.props.responsive.isMobile && <Button onClick={this.ToggleActionFixed} >操作固定/撤销</Button> }
                 <Spin spinning={this.state.loading}>
                     <Table
                         rowSelection={rowSelection}
@@ -151,7 +154,8 @@ class List extends React.Component {
 
 const mapStateToProps = state => {
     const { resData } = state.httpData;
-    return { resData };
+    const { responsive } = state;
+    return { resData, responsive };
 };
 const mapDispatchToProps = dispatch => ({
     fetchData: bindActionCreators(fetchData, dispatch),
