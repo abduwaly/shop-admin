@@ -14,36 +14,36 @@ class App extends Component {
         collapsed: false,
     };
     componentWillMount() {
-        const { receiveData } = this.props;
-        const user = JSON.parse(localStorage.getItem('user'));
-        user && receiveData(user, 'auth');
-        // receiveData({a: 213}, 'auth');
-        // fetchData({funcName: 'admin', stateName: 'auth'});
+        const { receiveData, history } = this.props;
+        const user = JSON.parse(localStorage.getItem('user') || localStorage.getItem('rem'));
+        user ? receiveData(user, 'auth') : history.push('/login');
+
         this.getClientWidth();
         window.onresize = () => {
             // console.log('屏幕变化了');
             this.getClientWidth();
         }
     }
+
     componentDidMount() {
         const openNotification = () => {
             notification.open({
               message: '首次登陆',
               description: (
                   <div>
-                      <p>
-                          第一次登陆会看到这个消息。。。
-                      </p>
+                      第一次登陆会看到这个消息。。。
                   </div>
               ),
               icon: <Icon type="info-circle" style={{ color: 'green' }} />,
               duration: 0,
+              onClose: localStorage.setItem('isFirst', JSON.stringify(true))
             });
-            localStorage.setItem('isFirst', JSON.stringify(true));
         };
         const isFirst = JSON.parse(localStorage.getItem('isFirst'));
-        !isFirst && openNotification();
+        const user = localStorage.getItem('user') || localStorage.getItem('rem');
+        (!isFirst && user) && openNotification();
     }
+
     getClientWidth = () => {    // 获取当前浏览器宽度并设置responsive管理响应式
         const { handleResponsive } = this.props;
         const clientWidth = document.body.clientWidth;

@@ -10,15 +10,21 @@ import { fetchData, receiveData } from '@/action';
 const FormItem = Form.Item;
 
 class Login extends React.Component {
+    state = {
+        rememberMe : false
+    }
+
     componentWillMount() {
         const { receiveData } = this.props;
         receiveData(null, 'auth');
     }
+
     componentWillReceiveProps(nextProps) {
         const { auth: nextAuth = {} } = nextProps;
         const { history } = this.props;
         if (nextAuth.data && nextAuth.data.uid) {   // 判断是否登陆
             localStorage.setItem('user', JSON.stringify(nextAuth.data));
+            this.state.rememberMe ? localStorage.setItem('rem', JSON.stringify(nextAuth.data)): localStorage.removeItem('rem');
             history.push('/');
         }
     }
@@ -30,6 +36,10 @@ class Login extends React.Component {
                 const { fetchData } = this.props;
                 if (values.userName === 'admin' && values.password === 'admin') fetchData({funcName: 'admin', stateName: 'auth'});
                 if (values.userName === 'guest' && values.password === 'guest') fetchData({funcName: 'guest', stateName: 'auth'});
+
+                this.setState({
+                   rememberMe: values.remember
+                });
             }
         });
     };
