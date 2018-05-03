@@ -18,37 +18,23 @@ export const getPros = () => axios.post('http://api.xitu.io/resources/github', {
     console.log(error);
 });
 
-export const npmDependencies = () => axios.get('./npm.json').then(res => res.data).catch(err => console.log(err));
-
-export const weibo = () => axios.get('./weibo.json').then(res => res.data).catch(err => console.log(err));
-//
-// const GIT_OAUTH = 'https://github.com/login/oauth';
-// export const gitOauthLogin = () => axios.get(`${GIT_OAUTH}/authorize?client_id=792cdcd244e98dcd2dee&redirect_uri=http://localhost:3006/&scope=user&state=reactAdmin`);
-// export const gitOauthToken = code => axios.post('https://cors-anywhere.herokuapp.com/' + GIT_OAUTH + '/access_token', {...{client_id: '792cdcd244e98dcd2dee',
-//     client_secret: '81c4ff9df390d482b7c8b214a55cf24bf1f53059', redirect_uri: 'http://localhost:3006/', state: 'reactAdmin'}, code: code}, {headers: {Accept: 'application/json'}})
-//     .then(res => res.data).catch(err => console.log(err));
-// export const gitOauthInfo = access_token => axios({
-//     method: 'get',
-//     url: 'https://api.github.com/user?access_token=' + access_token,
-// }).then(res => res.data).catch(err => console.log(err));
-
-// easy-mock数据交互
 // 管理员权限获取
-export const admin = () => get({url: config.MOCK_AUTH_ADMIN});
+export const admin = () => get({url: config.NODE_SERVER + '/auth/admin'});
 
 // 访问权限获取
-export const guest = () => get({url: config.MOCK_AUTH_VISITOR});
+// export const guest = () => get({url: config.MOCK_AUTH_VISITOR});
+export const guest = () => get({url: config.NODE_SERVER + '/auth/visitor'});
 
 export const addManager = (data) => post({
-    url: 'http://localhost:3000/manager/add',
+    url: config.NODE_SERVER + '/manager/add',
     data: data
 });
 
-export const managerList = () => get({url: 'http://localhost:3000/manager/all'});
+export const managerList = () => get({url: config.NODE_SERVER + '/manager/all'});
 
-export const getManagerById = (id) => get({url: 'http://localhost:3000/manager/'+id});
+export const getManagerById = (id) => get({url: config.NODE_SERVER + '/manager/'+id});
 
 export const editManager = (data) => post({
-    url: 'http://localhost:3000/manager/edit',
+    url: config.NODE_SERVER + '/manager/update',
     data: data
 });

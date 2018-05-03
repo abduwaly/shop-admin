@@ -83,7 +83,7 @@ class HeaderCustom extends Component {
         return (
             <Header style={{ background: '#fff', padding: 0, height: 65 }} className="custom-theme" >
                 {
-                    responsive.data.isMobile ? (
+                    responsive.isMobile ? (
                         <Popover content={<SiderCustom path={path} popoverHide={this.popoverHide} />} trigger="click" placement="bottomLeft" visible={this.state.visible} onVisibleChange={this.handleVisibleChange}>
                             <Icon type="bars" className="trigger custom-trigger" />
                         </Popover>
@@ -128,6 +128,9 @@ class HeaderCustom extends Component {
                         width: 120px;
                         left: -40px;
                     }
+                    .ant-popover-inner-content{
+                        padding: 3px;
+                    }
                 `}</style>
             </Header>
         )
@@ -135,7 +138,7 @@ class HeaderCustom extends Component {
 }
 
 const mapStateToProps = state => {
-    const { responsive = {data: {}} } = state.httpData;
+    const { responsive } = state;
     return {responsive};
 };
 

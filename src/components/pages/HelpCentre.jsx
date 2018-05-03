@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from 'antd';
-import * as x from '../../axios/index';
 import { counter } from '../../reducer/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -33,7 +32,7 @@ class HelpCentre extends React.Component{
     };
 
     back = (e) => {
-        x.npmDependencies().then((v) => { console.log("^^^^^^^^^", v, e) });
+        // x.npmDependencies().then((v) => { console.log("^^^^^^^^^", v, e) });
         // x.admin().then((v) => { console.log("^^^^ admin ^^^^^", v) });
         // x.guest().then((v) => { console.log("^^^^ guest ^^^^^", v) });
         // console.log(x);
