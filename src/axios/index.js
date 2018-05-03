@@ -47,3 +47,8 @@ export const addManager = (data) => post({
 export const managerList = () => get({url: 'http://localhost:3000/manager/all'});
 
 export const getManagerById = (id) => get({url: 'http://localhost:3000/manager/'+id});
+
+export const editManager = (data) => post({
+    url: 'http://localhost:3000/manager/edit',
+    data: data
+});

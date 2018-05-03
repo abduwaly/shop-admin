@@ -56,7 +56,7 @@ class SiderCustom extends Component {
         })
     };
     render() {
-        const logo = ['仁仁管理平台','仁仁'];
+        const logo = ['Snack Admin','SA'];
         return (
             <Sider
                 trigger={null}
@@ -81,10 +81,6 @@ class SiderCustom extends Component {
                         right: 0 !important;
                     }
                     .logo{
-                        height: 32px;
-                        background: #27676d;
-                        border-radius: 6px;
-                        margin: 16px;
                         color: white;
                         line-height: 32px;
                         text-align: center;

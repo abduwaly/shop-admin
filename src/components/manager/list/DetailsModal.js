@@ -2,17 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchData, receiveData, hideMDetails, showMEdit } from '@/action';
-import { Modal, Spin } from 'antd';
+import { Modal, Spin, Button } from 'antd';
 
 class DetailsModal extends React.Component {
 
     state = {
         loading: false,
         dataSource: {}
-    }
-
-    componentWillMount() {
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -34,12 +30,12 @@ class DetailsModal extends React.Component {
 
     }
 
-    handleOk = (e) => {
+    handleGotIt = (e) => {
         this.props.hideMDetails();
         this.props.receiveData(null, 'response');
     }
 
-    handleCancel = (e) => {
+    handleToEdit = (e) => {
         this.props.hideMDetails();
         this.props.showMEdit(this.props.detailsId);
     }
@@ -50,10 +46,13 @@ class DetailsModal extends React.Component {
                 title="用户信息"
                 className="manager-details-modal"
                 visible={this.props.visible}
-                okText="确定"
-                cancelText="编辑"
-                onOk={this.handleOk}
-                onCancel={this.handleCancel}
+                onCancel={this.handleGotIt}
+                footer={[
+                    <Button key="back" onClick={this.handleToEdit}>Edit</Button>,
+                    <Button key="submit" type="primary" onClick={this.handleGotIt}>
+                      OK
+                    </Button>,
+                 ]}
             >
                 <Spin spinning={this.state.loading}>
                     <p>{ this.state.dataSource.username }</p>
