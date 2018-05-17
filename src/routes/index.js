@@ -10,6 +10,7 @@ import RouterEnter from '../components/auth/RouterEnter';
 
 import ManagerAdd from '../components/manager/add/ManagerAdd';
 import Managers from '../components/manager/list/Managers';
+import BlogAdd from '../components/blog/add/BlogAdd';
 // import Wysiwyg from 'bundle-loader?lazy!../components/ui/Wysiwyg';  // 按需加载富文本配置
 // import Bundle from '../components/widget/Bundle';
 
@@ -34,9 +35,12 @@ export default class CRouter extends Component {
                 <Route exact path="/app/dashboard/index" component={Dashboard} />
                 <Route exact path="/app/manager/add" component={ManagerAdd} />
                 <Route exact path="/app/manager/list" component={Managers} />
+                <Route exact path="/app/blog/add" component={BlogAdd} />
+                <Route exact path="/app/blog/list" component={() => <p>博客列表</p>} />
                 <Route exact path="/app/product/add" component={() => <p>添加商品</p>} />
                 <Route exact path="/app/product/list" component={() => <p>商品列表</p>} />
                 <Route exact path="/app/order/list" component={() => <p>订单列表</p>} />
+
 
                 {/* 权限管理相关 */}
                 <Route exact path="/app/auth/basic" component={AuthBasic} />

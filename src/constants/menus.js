@@ -8,6 +8,13 @@ export const menus = [
         ],
     },
     {
+        key: '/app/blog', title: '博客管理', icon: 'folder',
+        sub: [
+            { key: '/app/blog/add', title: '发布博客', icon: 'edit', },
+            { key: '/app/blog/list', title: '博客列表', icon: 'tags', },
+        ],
+    },
+    {
         key: '/app/product', title: '商品管理', icon: 'shop',
         sub: [
             { key: '/app/product/add', title: '添加商品', icon: 'file-add', },
